@@ -79,34 +79,45 @@
             <p class="hint">A glimpse of the hosts—short, sharp, and curious.</p>
           `;
         } else {
-         body.innerHTML = `
-  <h3 style="text-align:center;margin:6px 0 14px 0;">Request an invite</h3>
-  <form id="f" action="https://formspree.io/f/xovyqvqy" method="POST">
-    <label><span>Name</span><input required placeholder="Your name" name="name"></label>
-    <label><span>Email</span><input type="email" required placeholder="you@studio.com" name="email"></label>
-    <label><span>What describes you? (student, founder, creator, etc.)</span>
-      <input placeholder="student / founder / operator" name="role">
-    </label>
-    <label><span>Why are you interested?</span>
-      <textarea rows="4" placeholder="one or two lines is perfect" name="note"></textarea>
-    </label>
-    <div class="row">
-      <label style="color:#9ca3af;font-size:12px;">
-        <input type="checkbox" required> I agree to be contacted about this project.
-      </label>
-      <button class="primary" type="submit">Send</button>
-    </div>
-    <p style="text-align:center;color:#9ca3af;font-size:12px;margin:0;">No spam. Ever.</p>
-  </form>
-`;
-
+          body.innerHTML = `
+            <h3 style="text-align:center;margin:6px 0 14px 0;">Request an invite</h3>
+            <form id="f" action="https://formspree.io/f/xovyqvqy" method="POST">
+              <label><span>Name</span><input required placeholder="Your name" name="name"></label>
+              <label><span>Email</span><input type="email" required placeholder="you@studio.com" name="email"></label>
+              <label><span>What describes you? (student, founder, creator, etc.)</span>
+                <input placeholder="student / founder / operator" name="role">
+              </label>
+              <label><span>Why are you interested?</span>
+                <textarea rows="4" placeholder="one or two lines is perfect" name="note"></textarea>
+              </label>
+              <div class="row">
+                <label style="color:#9ca3af;font-size:12px;">
+                  <input type="checkbox" required> I agree to be contacted about this project.
+                </label>
+                <button class="primary" type="submit">Send</button>
+              </div>
+              <p style="text-align:center;color:#9ca3af;font-size:12px;margin:0;">No spam. Ever.</p>
+            </form>
           `;
           const form = body.querySelector('#f');
-          form.addEventListener('submit', (e) => {
+          form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            // You can wire this to a form endpoint later; for now just show a message.
-            body.innerHTML = `<div style="text-align:center;padding:20px 0;">got it.<div class="hint">We’ll reach out soon.</div></div>`;
-            setTimeout(closeModal, 900);
+            const data = new FormData(form);
+            try {
+              const res = await fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+              });
+              if (res.ok) {
+                body.innerHTML = `<div style="text-align:center;padding:20px 0;">got it.<div class="hint">we’ll reach out soon.</div></div>`;
+                setTimeout(closeModal, 900);
+              } else {
+                alert('oops—could not send. try again in a minute.');
+              }
+            } catch {
+              alert('network error. try again.');
+            }
           });
         }
         overlay.style.display = 'flex';
