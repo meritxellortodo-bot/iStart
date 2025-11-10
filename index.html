@@ -7,16 +7,6 @@
   </head>
   <body>
     <div id="root"></div>
-
-    <!-- make React global for any classic-runtime code -->
-    <script type="module">
-      import * as React from 'react';
-      window.React = React;
-    </script>
-
-    <!-- your app entry -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
-
