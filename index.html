@@ -2,17 +2,123 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>iStart</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; }
+      body { background:#000; color:#fff; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; }
+      .wrap { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto; }
+      header, footer { display:flex; justify-content:center; align-items:center; padding:24px 16px; }
+      header div { letter-spacing: .35em; font-size:12px; opacity:.7; text-transform: lowercase; }
+      main { display:flex; align-items:center; justify-content:center; padding:64px 16px; }
+      .center { max-width: 900px; text-align:center; }
+      h1 { margin:0; line-height:1.3; color:#e5e5e5; font-size:clamp(28px,5vw,48px); opacity:0; transform: translateY(8px); animation: fadeUp .8s ease-out forwards; }
+      .btns { margin-top: 32px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; opacity:0; transform: translateY(8px); animation: fadeUp .8s .25s ease-out forwards; }
+      .ghost { border:1px solid #3f3f46; background:transparent; color:#e5e5e5; padding:12px 20px; border-radius:12px; letter-spacing:.06em; font-size:14px; cursor:pointer; transition:.2s border-color,.2s background-color,.2s transform; }
+      .ghost:hover { border-color:#71717a; background:#111; }
+      .ghost:active { transform:scale(.99); }
+      .x { position: fixed; bottom:28px; left: 0; right: 0; text-align:center; opacity:.4; pointer-events:none; }
+      .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter: blur(4px); display:none; align-items:center; justify-content:center; padding:24px; z-index:50; }
+      .modal { width:min(880px, 100%); background:#0a0a0a; border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.6); transform:scale(.98); opacity:0; transition:.18s ease; }
+      .modal.open { transform:scale(1); opacity:1; }
+      .close { position:absolute; right:16px; top:16px; border:0; background:transparent; color:#a3a3a3; padding:8px; border-radius:10px; cursor:pointer; }
+      .close:hover { background:#1a1a1a; color:#fff; }
+      .aspect { position:relative; width:100%; padding-top:56.25%; border-radius:16px; overflow:hidden; background:#111; }
+      .aspect > * { position:absolute; inset:0; width:100%; height:100%; }
+      .hint { margin-top:10px; color:#a3a3a3; font-size:12px; }
+      form { display:grid; gap:12px; }
+      label span { display:block; margin-bottom:8px; color:#a3a3a3; font-size:12px; letter-spacing:.12em; text-transform:uppercase; }
+      input, textarea { width:100%; background:#0f0f10; color:#fff; border:1px solid #3f3f46; border-radius:12px; padding:12px 14px; font-size:14px; outline: none; }
+      input::placeholder, textarea::placeholder { color:#6b7280; }
+      input:focus, textarea:focus { border-color:#71717a; }
+      .row { display:flex; justify-content:space-between; gap:12px; align-items:center; }
+      .primary { background:#fff; color:#000; border:0; padding:10px 16px; border-radius:12px; font-size:14px; cursor:pointer; }
+      footer { color:#737373; font-size:12px; }
+      @keyframes fadeUp { to { opacity:1; transform: translateY(0) } }
+    </style>
   </head>
   <body>
-   <div id="root"></div>
+    <div class="wrap">
+      <header><div>istart</div></header>
+      <main>
+        <div class="center">
+          <h1>While some wait, we start.</h1>
+          <div class="btns">
+            <button class="ghost" data-open="video">watch me</button>
+            <button class="ghost" data-open="form">i dare to begin</button>
+          </div>
+        </div>
+      </main>
+      <footer>© <span id="y"></span>—All rights reserved.</footer>
+      <div class="x">×</div>
+    </div>
 
-<!-- Provide global React + ReactDOM (UMD) for any classic-runtime code -->
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Modal -->
+    <div id="overlay" class="modal-backdrop" aria-hidden="true">
+      <div id="modal" class="modal">
+        <button class="close" aria-label="Close">✕</button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
 
-<!-- Your app entry (ESM) -->
-<script type="module" src="/src/main.jsx"></script>
+    <script>
+      document.getElementById('y').textContent = new Date().getFullYear();
+
+      const overlay = document.getElementById('overlay');
+      const modal = document.getElementById('modal');
+      const body = document.getElementById('modal-body');
+
+      function openModal(kind) {
+        if (kind === 'video') {
+          body.innerHTML = `
+            <div class="aspect">
+              <video src="https://cdn.coverr.co/videos/coverr-crowd-of-people-walking-6261/1080p.mp4" controls playsinline></video>
+            </div>
+            <p class="hint">A glimpse of the hosts—short, sharp, and curious.</p>
+          `;
+        } else {
+          body.innerHTML = `
+            <h3 style="text-align:center;margin:6px 0 14px 0;">Request an invite</h3>
+            <form id="f">
+              <label><span>Name</span><input required placeholder="Your name" name="name"></label>
+              <label><span>Email</span><input type="email" required placeholder="you@studio.com" name="email"></label>
+              <label><span>What describes you? (student, founder, creator, etc.)</span><input placeholder="student / founder / operator" name="role"></label>
+              <label><span>Why are you interested?</span><textarea rows="4" placeholder="one or two lines is perfect" name="note"></textarea></label>
+              <div class="row">
+                <label style="color:#9ca3af;font-size:12px;">
+                  <input type="checkbox" required> I agree to be contacted about this project.
+                </label>
+                <button class="primary" type="submit">Send</button>
+              </div>
+              <p style="text-align:center;color:#9ca3af;font-size:12px;margin:0;">No spam. Ever.</p>
+            </form>
+          `;
+          const form = body.querySelector('#f');
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // You can wire this to a form endpoint later; for now just show a message.
+            body.innerHTML = `<div style="text-align:center;padding:20px 0;">got it.<div class="hint">We’ll reach out soon.</div></div>`;
+            setTimeout(closeModal, 900);
+          });
+        }
+        overlay.style.display = 'flex';
+        requestAnimationFrame(() => modal.classList.add('open'));
+        overlay.setAttribute('aria-hidden','false');
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        setTimeout(() => { overlay.style.display = 'none'; overlay.setAttribute('aria-hidden','true'); }, 140);
+      }
+
+      document.querySelectorAll('[data-open]').forEach(b => {
+        b.addEventListener('click', () => openModal(b.dataset.open));
+      });
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+      document.querySelector('.close').addEventListener('click', closeModal);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    </script>
   </body>
 </html>
