@@ -6,7 +6,13 @@
     <title>iStart</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+   <div id="root"></div>
+
+<!-- Provide global React + ReactDOM (UMD) for any classic-runtime code -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+<!-- Your app entry (ESM) -->
+<script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
