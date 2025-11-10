@@ -3,8 +3,7 @@ import ReactDOM from "react-dom/client";
 import Landing from "./App.jsx";
 import "./index.css";
 
-// ⬇️ shim: define global React for any code compiled with classic runtime
-// (harmless even when using the automatic runtime)
+// Define global React (safety shim for any classic-runtime compiled code)
 window.React = React;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
