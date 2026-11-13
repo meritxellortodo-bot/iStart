@@ -34,7 +34,7 @@
       .ghost { border:1px solid #3f3f46; background:transparent; color:#e5e5e5; padding:12px 20px; border-radius:12px; letter-spacing:.06em; font-size:14px; cursor:pointer; transition:.2s border-color,.2s background-color,.2s transform; }
       .ghost:hover { border-color:#71717a; background:#111; }
       .ghost:active { transform:scale(.99); }
-      .x { position: fixed; bottom:28px; left: 0; right: 0; text-align:center; opacity:.4; pointer-events:none; }
+      .x { position: fixed; bottom:104px; left: 0; right: 0; text-align:center; opacity:.4; pointer-events:none; }
       .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter: blur(4px); display:none; align-items:center; justify-content:center; padding:24px; z-index:50; }
       .modal { width:min(880px, 100%); background:#0a0a0a; border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.6); transform:scale(.98); opacity:0; transition:.18s ease; }
       .modal.open { transform:scale(1); opacity:1; }
@@ -50,7 +50,9 @@
       input:focus, textarea:focus { border-color:#71717a; }
       .row { display:flex; justify-content:space-between; gap:12px; align-items:center; }
       .primary { background:#fff; color:#000; border:0; padding:10px 16px; border-radius:12px; font-size:14px; cursor:pointer; }
-      footer { color:#737373; font-size:12px; }
+      footer { color:#737373; font-size:12px; flex-direction:column; gap:10px; }
+      .social { color:#a3a3a3; text-decoration:none; letter-spacing:.12em; padding:4px 2px; border-bottom:1px solid transparent; transition:.2s color,.2s border-color; }
+      .social:hover { color:#fff; border-color:#52525b; }
       @keyframes fadeUp { to { opacity:1; transform: translateY(0) } }
     </style>
   </head>
@@ -66,7 +68,10 @@
           </div>
         </div>
       </main>
-      <footer>© <span id="y"></span>—All rights reserved.</footer>
+      <footer>
+        <a class="social" href="https://www.instagram.com/istart_pod/" target="_blank" rel="noopener">instagram ↗</a>
+        <div>© <span id="y"></span>—All rights reserved.</div>
+      </footer>
       <div class="x">×</div>
     </div>
 
