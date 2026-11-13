@@ -52,6 +52,7 @@
       .primary { background:#fff; color:#000; border:0; padding:10px 16px; border-radius:12px; font-size:14px; cursor:pointer; }
       footer { color:#737373; font-size:12px; flex-direction:column; gap:10px; }
       .social { color:#a3a3a3; text-decoration:none; letter-spacing:.12em; padding:4px 2px; border-bottom:1px solid transparent; transition:.2s color,.2s border-color; }
+      .socials { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; }
       .social:hover { color:#fff; border-color:#52525b; }
       @keyframes fadeUp { to { opacity:1; transform: translateY(0) } }
     </style>
@@ -69,7 +70,10 @@
         </div>
       </main>
       <footer>
-        <a class="social" href="https://www.instagram.com/istart_pod/" target="_blank" rel="noopener">instagram ↗</a>
+        <nav class="socials">
+          <a class="social" href="https://www.instagram.com/istart_pod/" target="_blank" rel="noopener">instagram ↗</a>
+          <a class="social" href="https://www.tiktok.com/@istartpod" target="_blank" rel="noopener">tiktok ↗</a>
+        </nav>
         <div>© <span id="y"></span>—All rights reserved.</div>
       </footer>
       <div class="x">×</div>
